@@ -9,6 +9,9 @@
 <form th:action="@{/create-note}" method="post" th:object="${note}">
     Title <input type="text" th:field="*{title}"><br>
     Content <textarea th:field="*{content}" cols="30" rows="10"></textarea><br>
+    Note Type: <select th:field="*{noteType}">
+    <option th:each="nt: ${noteTypes}" th:value="${nt.getId()}" th:text="${nt.getName()}"></option>
+</select><br>
     <input type="submit" value="Add Note">
 </form>
 </body>

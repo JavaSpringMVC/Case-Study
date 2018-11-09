@@ -2,27 +2,27 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>List My Note</title>
+    <script type="text/javascript" th:src="@{/myJs.js}"></script>
 </head>
 <body>
 <h1><a href="/list">list Note</a></h1>
 <div th:if="${message}">
     <p th:text="${message}"></p>
 </div>
-<form th:action="@{/create-note}" method="post" th:object="${note}">
+<form th:action="@{/edit-note}" method="post" th:object="${note}" id="edit-delete-note">
     <input type="hidden" th:field="*{id}">
     Title <input type="text" th:field="*{title}"><br>
     Content <textarea th:field="*{content}" cols="30" rows="10"></textarea><br>
+    Note Type: <select th:field="*{noteType}">
+        <option th:each="nt: ${noteTypes}" th:value="${nt.getId()}"
+                th:text="${nt.getName()}"
+                th:selected="(${nt.getId() == note.getNoteType().getId()})">
+        </option>
+    </select><br>
     <input type="submit" value="Edit Note">
-    <input type="submit" value="Delete" onclick="deleteNote()">
+    <input type="button" value="Delete" id="delete" th:onclick="'deleteNote('+*{id}+')'">
 </form>
 
-<script>
-    function deleteNote() {
-        if (confirm("Dou you delete Note?")){
-            window.location.href = "/create-note";
-        }
-    }
-</script>
 </body>
 </html>

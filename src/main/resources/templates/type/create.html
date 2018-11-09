@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Create Note Type</h1>
+<h2><a href="/noteType/">List type Note</a></h2>
+<th:block th:if="${message}">
+    <p th:text="${message}"></p>
+</th:block>
+<form action="/noteType/create-note-type" method="post" th:object="${noteType}">
+    Name: <input type="text" th:field="*{name}"><br>
+    Description: <input type="text" th:field="*{description}"><br>
+    <input type="submit" value="Add Note Type">
+</form>
+</body>
+</html>

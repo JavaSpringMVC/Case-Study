@@ -20,7 +20,7 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public Note findById(Integer id) {
-        return noteRepository.findById(id).orElse(null);
+        return noteRepository.findById(id).get();
     }
 
     @Override

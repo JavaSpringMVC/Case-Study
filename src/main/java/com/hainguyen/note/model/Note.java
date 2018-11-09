@@ -13,7 +13,7 @@ public class Note {
 
     @ManyToOne
     @JoinColumn(name = "type_id")
-    private Note note;
+    private NoteType noteType;
 
     public Note() {
     }
@@ -42,11 +42,11 @@ public class Note {
         this.content = content;
     }
 
-    public Note getNote() {
-        return note;
+    public NoteType getNoteType() {
+        return noteType;
     }
 
-    public void setNote(Note note) {
-        this.note = note;
+    public void setNoteType(NoteType noteType) {
+        this.noteType = noteType;
     }
 }
