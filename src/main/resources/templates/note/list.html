@@ -5,9 +5,14 @@
     <title>Title</title>
 </head>
 <body>
-<h1>list Note</h1>
-<div th:each="n : ${notes}">
-    Title: <p th:text="${n.getTitle()}"></p>
+<h1><a href="/list">list Note</a></h1>
+<h2><a href="/create-note">Create new Note</a></h2>
+<div th:each="n : ${notes}" style="border: 1px solid red;">
+    Title: <b th:text="${n.getTitle()}"></b><br>
+    Content: <b th:text="${n.getContent()}"></b>
+    <br>
+    <a th:href="@{/edit-note/__${n.getId()}__}">Edit</a>
+    <a th:href="@{/delete-note/__${n.getId()}__}" onclick="return confirm('Do you delete Note')">Delete</a>
 </div>
 </body>
 </html>

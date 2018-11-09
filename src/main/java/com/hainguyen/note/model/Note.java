@@ -11,6 +11,10 @@ public class Note {
     private String title;
     private String content;
 
+    @ManyToOne
+    @JoinColumn(name = "type_id")
+    private Note note;
+
     public Note() {
     }
 
@@ -36,5 +40,13 @@ public class Note {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Note getNote() {
+        return note;
+    }
+
+    public void setNote(Note note) {
+        this.note = note;
     }
 }
