@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>list Note</h1>
+<div th:each="n : ${notes}">
+    Title: <p th:text="${n.getTitle()}"></p>
+</div>
+</body>
+</html>
