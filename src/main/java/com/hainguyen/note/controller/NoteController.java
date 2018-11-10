@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -56,7 +57,7 @@ public class NoteController {
         return modelAndView;
     }
 
-    public String uriSearchAndPaging(HttpServletRequest request){
+    public String uriSearchAndPaging(HttpServletRequest request) {
         String uri = String.valueOf(request.getRequestURL());
         String rQuest = request.getQueryString();
         if (rQuest != null) {
@@ -74,26 +75,23 @@ public class NoteController {
         return uri;
     }
 
+    /*Create*/
     @GetMapping("/create-note")
-    public ModelAndView createForm() {
-        ModelAndView modelAndView = new ModelAndView("note/create");
-        modelAndView.addObject("note", new Note());
-        return modelAndView;
+    public String createForm(Model model) {
+        model.addAttribute("note", new Note());
+        return "note/create";
     }
 
     @PostMapping("/create-note")
-    public ModelAndView saveCreate(@Validated @ModelAttribute("note") Note note
-            , RedirectAttributes attributes
-            , BindingResult bindingResult) {
-        ModelAndView modelAndView;
-        if (bindingResult.hasErrors()) {
-            modelAndView = new ModelAndView("note/create");
-        } else {
-            noteService.save(note);
-            modelAndView = new ModelAndView("redirect:/list");
-            attributes.addFlashAttribute("message", "Create Note Successful");
+    public String saveCreate(@Validated @ModelAttribute("note") Note note
+            ,BindingResult bindingResult, RedirectAttributes attributes) {
+        //RedirectAttributes xung dot BindingResult neu de truoc no
+        if (bindingResult.hasFieldErrors()) {
+            return "note/create";
         }
-        return modelAndView;
+        noteService.save(note);
+        attributes.addFlashAttribute("message", "Create Note Successful");
+        return "redirect:/list";
     }
 
     @GetMapping("/edit-note/{id}")

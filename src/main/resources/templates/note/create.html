@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 <h1><a href="/list">list Note</a></h1>
-<form th:action="@{/create-note}" method="post" th:object="${note}">
-    Title <input type="text" th:field="*{title}"><br>
-    Content <textarea th:field="*{content}" cols="30" rows="10"></textarea><br>
+<form  action="#" th:action="@{/create-note}" method="post" th:object="${note}">
+    Title <input th:field="*{title}">
+    <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title</span> <br>
+
+    Content <textarea th:field="*{content}" cols="30" rows="10"></textarea>
+    <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></span><br>
+
     Note Type: <select th:field="*{noteType}">
     <option th:each="nt: ${noteTypes}" th:value="${nt.getId()}" th:text="${nt.getName()}"></option>
 </select><br>

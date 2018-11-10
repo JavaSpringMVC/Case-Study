@@ -12,7 +12,7 @@ public class Note {
     private Integer id;
 
     @NotEmpty
-    @Size(min=1, max = 255)
+    @Size(min=5, max = 255)
     private String title;
 
     @NotEmpty
@@ -20,7 +20,6 @@ public class Note {
 
     @ManyToOne
     @JoinColumn(name = "type_id")
-    @NotEmpty
     private NoteType noteType;
 
     public Note() {
