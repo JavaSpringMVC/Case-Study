@@ -50,9 +50,15 @@ public class NoteController {
             modelAndView.addObject("notes", noteService.findAll(pageable));
         }
 
+        String uri = uriSearchAndPaging(request);
+        modelAndView.addObject("myUrl", uri);
+        modelAndView.addObject("currentPage", page);
+        return modelAndView;
+    }
+
+    public String uriSearchAndPaging(HttpServletRequest request){
         String uri = String.valueOf(request.getRequestURL());
         String rQuest = request.getQueryString();
-        //System.out.println(rQuest.substring(index));
         if (rQuest != null) {
             int index = rQuest.indexOf("&");
             System.out.println(index);
@@ -65,9 +71,7 @@ public class NoteController {
         } else {
             uri += "?note";
         }
-        modelAndView.addObject("myUrl", uri);
-        modelAndView.addObject("currentPage", page);
-        return modelAndView;
+        return uri;
     }
 
     @GetMapping("/create-note")
