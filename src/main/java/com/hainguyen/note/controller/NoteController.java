@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
@@ -42,13 +45,27 @@ public class NoteController {
         if (search.isPresent()) {
             modelAndView.addObject("notes", noteService.findAllByTitleContaining(search.get(), pageable));
         } else if (noteType.isPresent()) {
-            System.out.println(noteType.get());
             modelAndView.addObject("notes", noteService.findAllByNoteTypeId(noteType.get(), pageable));
-            //modelAndView.addObject("notes", noteService.findAll(pageable));
         } else {
             modelAndView.addObject("notes", noteService.findAll(pageable));
         }
-        modelAndView.addObject("myUrl", request.getRequestURL().toString());
+
+        String uri = String.valueOf(request.getRequestURL());
+        String rQuest = request.getQueryString();
+        //System.out.println(rQuest.substring(index));
+        if (rQuest != null) {
+            int index = rQuest.indexOf("&");
+            System.out.println(index);
+            if (index != -1) {
+                System.out.println(rQuest.substring(0, index));
+                uri += "?" + rQuest.substring(0, index);
+            } else {
+                uri += "?" + request.getQueryString();
+            }
+        } else {
+            uri += "?note";
+        }
+        modelAndView.addObject("myUrl", uri);
         modelAndView.addObject("currentPage", page);
         return modelAndView;
     }
@@ -61,9 +78,17 @@ public class NoteController {
     }
 
     @PostMapping("/create-note")
-    public ModelAndView saveCreate(@ModelAttribute("note") Note note) {
-        noteService.save(note);
-        ModelAndView modelAndView = new ModelAndView("redirect:/list");
+    public ModelAndView saveCreate(@Validated @ModelAttribute("note") Note note
+            , RedirectAttributes attributes
+            , BindingResult bindingResult) {
+        ModelAndView modelAndView;
+        if (bindingResult.hasErrors()) {
+            modelAndView = new ModelAndView("note/create");
+        } else {
+            noteService.save(note);
+            modelAndView = new ModelAndView("redirect:/list");
+            attributes.addFlashAttribute("message", "Create Note Successful");
+        }
         return modelAndView;
     }
 

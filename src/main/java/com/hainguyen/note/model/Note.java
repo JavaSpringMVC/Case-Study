@@ -1,6 +1,8 @@
 package com.hainguyen.note.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "note")
@@ -8,11 +10,17 @@ public class Note {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+    @NotEmpty
+    @Size(min=1, max = 255)
     private String title;
+
+    @NotEmpty
     private String content;
 
     @ManyToOne
     @JoinColumn(name = "type_id")
+    @NotEmpty
     private NoteType noteType;
 
     public Note() {

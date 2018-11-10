@@ -56,7 +56,7 @@
 <div class="paging">
     <span>Trang: </span>
     <span th:each="note : ${#numbers.sequence(0, (notes.totalPages)-1)}">
-        <a th:href="@{'/list'(page=${note})}" th:text="${note}"
+        <a th:href="@{${myUrl}(page=${note})}" th:text="${note}"
            th:style="${currentPage} == ${note} ? 'font-weight:bold; color:red;': 'text-decoration:none'"></a>
     </span>
 </div>
