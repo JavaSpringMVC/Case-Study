@@ -21,6 +21,16 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
+    public Page<Note> findAllByTitleContaining(String title, Pageable pageable) {
+        return noteRepository.findAllByTitleContaining(title, pageable);
+    }
+
+    @Override
+    public Page<Note> findAllByNoteTypeId(Integer id, Pageable pageable) {
+        return noteRepository.findAllByNoteTypeId(id, pageable);
+    }
+
+    @Override
     public Note findById(Integer id) {
         return noteRepository.findById(id).get();
     }

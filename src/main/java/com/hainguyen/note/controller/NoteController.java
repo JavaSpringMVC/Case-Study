@@ -11,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
+
 @Controller
 public class NoteController {
     @Autowired
@@ -31,9 +34,21 @@ public class NoteController {
 
     @GetMapping(value = {"/list", "/"})
     public ModelAndView listNote(@PageableDefault(size = 3, sort = "title") Pageable pageable,
-                                 @RequestParam(defaultValue = "0") int page) {
+                                 @RequestParam(defaultValue = "0") int page,
+                                 @RequestParam("search") Optional<String> search,
+                                 @RequestParam("noteType") Optional<Integer> noteType,
+                                 HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("note/list");
-        modelAndView.addObject("notes", noteService.findAll(pageable));
+        if (search.isPresent()) {
+            modelAndView.addObject("notes", noteService.findAllByTitleContaining(search.get(), pageable));
+        } else if (noteType.isPresent()) {
+            System.out.println(noteType.get());
+            modelAndView.addObject("notes", noteService.findAllByNoteTypeId(noteType.get(), pageable));
+            //modelAndView.addObject("notes", noteService.findAll(pageable));
+        } else {
+            modelAndView.addObject("notes", noteService.findAll(pageable));
+        }
+        modelAndView.addObject("myUrl", request.getRequestURL().toString());
         modelAndView.addObject("currentPage", page);
         return modelAndView;
     }

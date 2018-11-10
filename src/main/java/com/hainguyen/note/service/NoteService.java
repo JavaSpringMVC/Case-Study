@@ -9,6 +9,10 @@ import java.util.List;
 public interface NoteService {
     Page<Note> findAll(Pageable pageable);
 
+    Page<Note> findAllByTitleContaining(String title, Pageable pageable);
+
+    Page<Note> findAllByNoteTypeId(Integer id, Pageable pageable);
+
     Note findById(Integer id);
 
     void save(Note note);
