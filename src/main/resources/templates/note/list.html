@@ -13,5 +13,13 @@
     <a th:href="@{/edit-note/__${n.getId()}__}">Edit</a>
     <a th:href="@{/delete-note/__${n.getId()}__}" onclick="return confirm('Do you delete Note')">Delete</a>
 </div>
+
+<div>
+    <span>Trang: </span>
+    <span th:each="note : ${#numbers.sequence(0, (notes.totalPages)-1)}">
+        <a th:href="@{'/list'(page=${note})}" th:text="${note}"
+           th:style="${currentPage} == ${note} ? 'font-weight:bold; color:red;': 'text-decoration:none'"></a>
+    </span>
+</div>
 </body>
 </html>

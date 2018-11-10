@@ -3,18 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style>
-        .div-view{
-            margin: 0 auto;
-            text-align: center;
-            border: 1px solid darkslategrey;
-            width: 500px;
-        }
-    </style>
+    <script type="text/javascript" th:src="@{/myJs.js}"></script>
+    <link rel="stylesheet" th:href="@{/myCss.css}">
 </head>
 <body>
 <div class="div-view">
-
+    <div class="ghichu">Ghi Chú | <a href="/list">List Note</a></div>
+    <div class="div-title">
+        <p class="title" th:text="${note.getTitle()}"></p>
+        <div>
+            <textarea th:text="${note.getContent()}" cols="53" rows="10" readonly></textarea>
+        </div>
+        <br>
+        <input class="div-button" type="button" value="Edit"
+               th:onclick="'window.location.href=\'/edit-note/'+${note.getId()}+'\''">
+        <input class="div-button-right" type="button" value="Delete" th:onclick="'deleteNote('+${note.getId()}+')'">
+    </div>
 </div>
 </body>
 </html>

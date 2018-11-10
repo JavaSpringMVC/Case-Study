@@ -1,0 +1,48 @@
+.div-view{
+    margin: 100px auto;
+    text-align: center;
+    border: 1px solid darkslategrey;
+    width: 500px;
+    height: 350px;
+}
+.ghichu{
+    height: 50px;
+    text-align: center;
+    padding-bottom: 10px;
+    font-size: 40px;
+    font-weight: bold;
+    border: 1px solid black;
+}
+.div-title{
+    text-align: left;
+    padding-left: 20px;
+    text-transform: uppercase;
+}
+a{
+    text-decoration: none;
+}
+a:hover{
+    color: red;
+}
+.div-button{
+    width: 100px;
+    padding: 5px;
+    background-color: blueviolet;
+    color: white;
+    cursor: pointer;
+}
+.div-button-right{
+    width: 100px;
+    padding: 5px;
+    background-color: blueviolet;
+    color: white;
+    margin-left: 60px;
+    cursor: pointer;
+}
+
+.title{
+    text-transform: capitalize;
+    font-size: 20px;
+    font-weight: bold;
+    color: red;
+}

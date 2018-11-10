@@ -5,11 +5,10 @@ import com.hainguyen.note.model.NoteType;
 import com.hainguyen.note.service.NoteService;
 import com.hainguyen.note.service.NoteTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -31,10 +30,11 @@ public class NoteController {
     }
 
     @GetMapping(value = {"/list", "/"})
-    public ModelAndView listNote() {
-        System.out.println("hello");
+    public ModelAndView listNote(@PageableDefault(size = 3, sort = "title") Pageable pageable,
+                                 @RequestParam(defaultValue = "0") int page) {
         ModelAndView modelAndView = new ModelAndView("note/list");
-        modelAndView.addObject("notes", noteService.findAll());
+        modelAndView.addObject("notes", noteService.findAll(pageable));
+        modelAndView.addObject("currentPage", page);
         return modelAndView;
     }
 

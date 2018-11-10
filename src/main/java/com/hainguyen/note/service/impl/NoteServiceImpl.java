@@ -4,6 +4,8 @@ import com.hainguyen.note.model.Note;
 import com.hainguyen.note.repository.NoteRepository;
 import com.hainguyen.note.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -14,8 +16,8 @@ public class NoteServiceImpl implements NoteService {
     NoteRepository noteRepository;
 
     @Override
-    public Iterable<Note> findAll() {
-        return noteRepository.findAll();
+    public Page<Note> findAll(Pageable pageable) {
+        return noteRepository.findAll(pageable);
     }
 
     @Override

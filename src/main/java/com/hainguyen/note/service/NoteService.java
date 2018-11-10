@@ -1,11 +1,13 @@
 package com.hainguyen.note.service;
 
 import com.hainguyen.note.model.Note;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface NoteService {
-    Iterable<Note> findAll();
+    Page<Note> findAll(Pageable pageable);
 
     Note findById(Integer id);
 
